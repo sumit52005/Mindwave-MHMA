@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore | MindEase Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="explore.css">
+</head>
+
+
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo"> 🧠 MindEase Portal</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About us</a>
+      <a href="#">Research</a>
+     
+    </nav>
+  </header>
+  
+
+
+  <!-- Explore Page Section -->
+   
+  <section class="explore-section">
+    <h1>Explore Our Features</h1>
+    <p class="subtext">Choose a section to begin your journey toward a peaceful mind 💫</p>
+
+    <div class="cards-container">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/128/10691/10691802.png" alt="Activities Icon">
+        <h2>Day-to-Day Activities</h2>
+        <p>Discover mindful habits and activities that uplift your mood every day.</p>
+        <a href="activities.html" class="btn">Explore</a>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3989/3989896.png" alt="Symptoms Icon">
+        <h2>Symptoms Detection</h2>
+        <p>Track your emotions and identify early signs of stress or anxiety.</p>
+        <a href="detection.html" class="btn">Detect</a>
+      </div>
+
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt="Problems Icon">
+        <h2>Mental Health Problems</h2>
+        <p>Learn about different mental health conditions and coping mechanisms.</p>
+        <a href="mental.html" class="btn">Learn more</a>
+      </div>
+
+      <!--<div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Psychiatrists Icon">
+        <h2>Find Psychiatrists</h2>
+        <p>Get connected with verified psychiatrists and mental health experts.</p>
+        <a href="psychiatrists" class="btn">Find now</a>
+      </div>-->
+    </div>
+  </section>
+
+  
+
+  <footer>
+    <p>© 2025 MindEase | Made with 💙 for mental wellness</p>
+  </footer>
+
+ <button id="logout-btn" onclick="supaLogout()">Logout</button>
+
+<style>
+#logout-btn {
+  position: fixed; 
+  bottom: 20px; 
+  left: 20px; 
+  padding: 10px 20px;
+  background: white;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  font-weight: 600;
+  display: none;
+}
+</style>
+
+
+<!-- Supabase SDK -->
+<<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/authentication.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    await ensureAuthOrRedirect();
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const { data } = await window.supabase.auth.getSession();
+  if (data?.session) {
+    document.getElementById("logout-btn").style.display = "block";
+  }
+});
+</script>
+
+</body>
+</html>

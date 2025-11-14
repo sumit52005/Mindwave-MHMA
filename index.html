@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindEase Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffffcc;
+      backdrop-filter: blur(8px);
+      padding: 15px 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .navbar .logo {
+      font-weight: 600;
+      font-size: 1.5em;
+      color: #0077b6;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #0077b6;
+      font-weight: 500;
+      margin: 0 10px;
+      transition: 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #005f8f;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      text-align: center;
+      color: #004f73;
+      min-height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .hero .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(162, 217, 255, 0.5), rgba(195, 240, 228, 0.5));
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .hero .content {
+      max-width: 600px;
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    .hero-gif {
+      width: 200px;
+      margin-bottom: 20px;
+      border-radius: 50%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #004f73;
+    }
+
+    .hero p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .explore-btn {
+      background: #0077b6;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .explore-btn:hover {
+      background: #005f8f;
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #ffffffcc;
+      color: #333;
+      font-size: 0.9em;
+    }
+
+    /* Logout Button (bottom-left) */
+    #logout-btn {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: white;
+      color: #0077b6;
+      border: 2px solid #0077b6;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: none;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      z-index: 50;
+    }
+
+    #logout-btn:hover {
+      background: #0077b6;
+      color: white;
+    }
+
+    /* Smooth animation */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Custom popup (message box style) */
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ffffff;
+      border: 2px solid #0077b6;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      font-weight: 500;
+      color: #004f73;
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.3s ease;
+      transform: translateY(-20px);
+      z-index: 100;
+    }
+
+    .popup.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">🧠 MindEase Portal</div>
+    <nav id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About us</a>
+      <a href="signin.html">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="content">
+      <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyMDV2aGE0MHk4eXR6YXJicGlrOGEycXJsOGl4MGNibW9tdGZxYTdwbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/wVW2wqlhDMuOWUEskW/giphy.gif" alt="Animated illustration" class="hero-gif">
+      <h1>Welcome to MindEase Portal</h1>
+      <p id="quote">“You are enough. Take a deep breath and smile.”</p>
+      <a href="#" id="explore-btn" class="explore-btn">Explore Now</a>
+    </div>
+  </section>
+
+  <!-- Logout Button -->
+  <button id="logout-btn" onclick="logout()">Logout</button>
+
+  <!-- Popup Message -->
+  <div id="popup" class="popup"></div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 MindEase | Made with 💙 for mental wellness</p>
+  </footer>
+
+  <button id="logout-btn" onclick="logout()" style="
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+">Logout</button>
+
+
+  
+
+  <script>
+    // Rotating motivational quotes
+    const quotes = [
+      "“You are enough. Take a deep breath and smile.”",
+      "“Peace begins the moment you choose to breathe.”",
+      "“Your feelings are valid — it’s okay to slow down.”",
+      "“Healing is not linear, but it’s always possible.”"
+    ];
+    let index = 0;
+    const quoteElement = document.getElementById("quote");
+    setInterval(() => {
+      index = (index + 1) % quotes.length;
+      quoteElement.style.opacity = 0;
+      setTimeout(() => {
+        quoteElement.textContent = quotes[index];
+        quoteElement.style.opacity = 1;
+      }, 600);
+    }, 5000);
+
+    // User handling
+    const exploreBtn = document.getElementById("explore-btn");
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const logoutBtn = document.getElementById("logout-btn");
+    const popup = document.getElementById("popup");
+
+    // Show logout button if logged in
+    if (user) {
+      logoutBtn.style.display = "block";
+      document.querySelector("#nav-links").innerHTML = `
+        <a href="index.html">Home</a>
+        <a href="about.html">About us</a>
+        <a href="explore.html">Explore</a>
+      `;
+    }
+
+    // Explore button logic
+    exploreBtn.addEventListener("click", () => {
+      if (!user) {
+        window.location.href = "signin.html"; // Directly go to signin page (no alert)
+      } else {
+        window.location.href = "explore.html";
+      }
+    });
+
+    // Custom popup function
+    function showPopup(message, color = "#0077b6") {
+      popup.textContent = message;
+      popup.style.borderColor = color;
+      popup.classList.add("show");
+      setTimeout(() => popup.classList.remove("show"), 3000);
+    }
+
+    // Logout
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      showPopup("You have logged out successfully 💙");
+      setTimeout(() => window.location.reload(), 1500);
+    }
+  </script>
+
+  
+  <!-- ✅ Supabase connection -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/authentication.js"></script>
+
+</body>
+</html>

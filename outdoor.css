@@ -1,0 +1,139 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  transition: background-image 2s ease-in-out;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 25px;
+  padding: 35px;
+  text-align: center;
+  width: 90%;
+  max-width: 430px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  font-size: 1.9rem;
+  color: #fff;
+}
+
+.intro-text {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #ddd;
+}
+
+button {
+  background: #43c98d;
+  border: none;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: #2fa879;
+}
+
+.hidden {
+  display: none;
+}
+
+.activity-card img {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 15px;
+}
+
+#activity {
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.quote-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 20px;
+  font-style: italic;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+#timer {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 10px;
+}
+
+/* --- NEW CSS FOR BACK BUTTON ON LEFT SIDE --- */
+.back-to-hub {
+    position: fixed; 
+    top: 20px; /* Distance from the top */
+    left: 20px; /* Distance from the left */
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    /* Darker, opaque background for better visibility */
+    background: rgba(0, 0, 0, 0.45); 
+    backdrop-filter: blur(5px);
+    z-index: 10; /* Ensure it stays above everything else */
+    transition: background 0.3s;
+}
+
+.back-to-hub:hover {
+    background: rgba(0, 0, 0, 0.65);
+}

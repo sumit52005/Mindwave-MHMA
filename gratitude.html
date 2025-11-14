@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gratitude Space 🌸</title>
+  <link rel="stylesheet" href="gratitude.css" />
+</head>
+
+
+
+<body>
+  <!-- 🌿 Navbar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <button class="back-btn" onclick="window.history.back()">Back</button>
+      <img src="https://cdn-icons-png.flaticon.com/512/2769/2769877.png" alt="MindEase Logo" class="logo">
+      <h2 class="nav-title">MindEase</h2>
+    </div>
+    <div class="nav-right">
+      <!--<button class="nav-link" onclick="window.location.href='index.html'">Home</button>-->
+      <button class="nav-link" onclick="window.location.href='about.html'">About Us</button>
+    </div>
+  </nav>
+
+  <div class="gratitude-container">
+    <h1>✨ Your Gratitude Space ✨</h1>
+    <p class="subtitle">A gentle reminder of your strength and light</p>
+
+    <div class="gratitude-card">
+      <h2 id="greeting"></h2>
+      <p id="reflection-summary"></p>
+      <p id="gratitude-message"></p>
+    </div>
+
+    <a href="reflection.html" class="reflection-button">Go Back To Reflection 🪞</a>
+  </div>
+
+  <script src="gratitude.js"></script>
+
+  <button id="logout-btn" onclick="logout()" style="
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+">Logout</button>
+
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/authentication.js"></script>
+
+</body>
+</html>

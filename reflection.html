@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reflection Journal 🪞</title>
+  <link rel="stylesheet" href="reflection.css" />
+</head>
+
+
+
+<body>
+  <!-- 🌿 Navbar -->
+  <nav class="navbar">
+    <div class="nav-left">
+     <!--<button class="back-btn" onclick="window.history.back()">Back</button>-->
+     
+      <img src="https://cdn-icons-png.flaticon.com/512/2769/2769877.png" alt="MindEase Logo" class="logo">
+      <h2 class="nav-title">MindEase</h2>
+    </div>
+    <div class="nav-right">
+      <button class="nav-link" onclick="window.location.href='index.html'">Home</button>
+      <button class="nav-link" onclick="window.location.href='about.html'">About Us</button>
+    </div>
+  </nav>
+  <a href="activities.html" class="back-btn">Back</a>
+
+  <div class="container">
+    <h1>🪞 Reflection Journal</h1>
+    <p class="subtitle">Write your thoughts, breathe, and unwind. Every small reflection matters.</p>
+
+    <div class="mood-box">
+      <label>🌈 Current Mood:</label>
+      <select id="mood">
+        <option value="Calm">Calm</option>
+        <option value="Happy">Happy</option>
+        <option value="Grateful">Grateful</option>
+        <option value="Tired">Tired</option>
+        <option value="Anxious">Anxious</option>
+      </select>
+    </div>
+
+    <div class="prompt-box">
+      <p id="prompt">✨ Prompt: Describe one small win from today.</p>
+      <button id="changePrompt">Change Prompt 🔄</button>
+    </div>
+
+    <textarea id="reflectionText" placeholder="Write your reflection here..."></textarea>
+
+    <div class="btn-group">
+      <button id="saveBtn">Save Reflection 💖</button>
+      <button id="clearBtn">Clear</button>
+      <button id="gratitudeBtn">Go to Gratitude 🌸</button>
+    </div>
+
+    <div id="result" class="result hidden"></div>
+
+    <div class="saved-box">
+      <h3>🪶 Your Past Reflections</h3>
+      <ul id="reflectionList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const prompts = [
+      "Describe one small win from today.",
+      "What challenged you today and how did you handle it?",
+      "Write one thing you learned about yourself today.",
+      "What made you smile unexpectedly?",
+      "What moment today made you feel calm or peaceful?"
+    ];
+
+    const promptText = document.getElementById("prompt");
+    const changePromptBtn = document.getElementById("changePrompt");
+    const saveBtn = document.getElementById("saveBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const gratitudeBtn = document.getElementById("gratitudeBtn");
+    const reflectionList = document.getElementById("reflectionList");
+    const result = document.getElementById("result");
+    const moodSelect = document.getElementById("mood");
+
+    // Update localStorage whenever mood changes
+    moodSelect.addEventListener("change", () => {
+      localStorage.setItem("latestMood", moodSelect.value);
+    });
+
+    // Change prompt randomly
+    changePromptBtn.addEventListener("click", () => {
+      promptText.textContent = "✨ Prompt: " + prompts[Math.floor(Math.random() * prompts.length)];
+    });
+
+    // Save reflection
+    saveBtn.addEventListener("click", () => {
+      const text = document.getElementById("reflectionText").value.trim();
+      const mood = moodSelect.value;
+
+      if (!text) {
+        result.textContent = "Please write something before saving 🌿";
+        result.classList.remove("hidden");
+        result.style.color = "#b33a3a";
+        return;
+      }
+
+      const reflections = JSON.parse(localStorage.getItem("reflections")) || [];
+      const newReflection = { text, mood, date: new Date().toLocaleString() };
+      reflections.push(newReflection);
+      localStorage.setItem("reflections", JSON.stringify(reflections));
+
+      // Also save the latest entry for gratitude page
+      localStorage.setItem("latestMood", mood);
+      localStorage.setItem("latestReflection", text);
+
+      showReflections();
+
+      result.textContent = "Reflection saved 🌼 You’re growing beautifully.";
+      result.style.color = "#2e4053";
+      result.classList.remove("hidden");
+      document.getElementById("reflectionText").value = "";
+    });
+
+    // Clear textarea
+    clearBtn.addEventListener("click", () => {
+      document.getElementById("reflectionText").value = "";
+      result.classList.add("hidden");
+    });
+
+    // Go to Gratitude page
+    gratitudeBtn.addEventListener("click", () => {
+      window.location.href = "gratitude.html";
+    });
+
+    // Show past reflections with delete
+    function showReflections() {
+      const reflections = JSON.parse(localStorage.getItem("reflections")) || [];
+      reflectionList.innerHTML = reflections.length
+        ? reflections.map((r, index) => `<li><b>${r.mood}</b> - ${r.text} <span>${r.date}</span> <button class="delete-btn" data-index="${index}">🗑️</button></li>`).join("")
+        : "<p>No reflections yet. Start writing your first one ✍</p>";
+    }
+
+    // Delete reflection
+    reflectionList.addEventListener("click", (e) => {
+      if (e.target.classList.contains("delete-btn")) {
+        const index = e.target.dataset.index;
+        const reflections = JSON.parse(localStorage.getItem("reflections")) || [];
+        reflections.splice(index, 1);
+        localStorage.setItem("reflections", JSON.stringify(reflections));
+        showReflections();
+      }
+    });
+
+    showReflections();
+    <button id="logout-btn" onclick="logout()" style="
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+">Logout</button>
+
+  </script>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/authetication.js"></script>
+
+</body>
+</html>

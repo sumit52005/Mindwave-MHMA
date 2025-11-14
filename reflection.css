@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #c8f7dc, #d4e4fa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  transition: background 1s ease-in-out;
+}
+/* 🌿 Navbar Styling */
+.navbar {
+  width: 100%;
+  background: linear-gradient(90deg, #b3e5c9, #b6d9ff);
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-title {
+  color: #2e4053;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.back-btn {
+  margin-left: 15px;
+  background-color: #92c7cf;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #7dbdc3;
+  transform: scale(1.05);
+}
+.container {
+  background-color: #ffffffcc;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+h1 {
+  color: #2e4053;
+}
+
+.subtitle {
+  color: #4a4a6a;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+select, textarea {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  background: #f3f9ff;
+  transition: all 0.3s ease;
+}
+
+textarea:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 5px #8cd1f9;
+}
+
+button {
+  background-color: #93d6d6;
+  border: none;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #7ac9c9;
+  transform: scale(1.05);
+}
+
+.prompt-box {
+  background-color: #f9f1ff;
+  border-radius: 12px;
+  padding: 15px;
+  color: #5a4b7b;
+  box-shadow: 0 0 10px rgba(161, 140, 209, 0.2);
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.saved-box {
+  text-align: left;
+  margin-top: 25px;
+  background-color: #f8fbff;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.saved-box h3 {
+  color: #3c3c64;
+}
+
+.saved-box ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.saved-box li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.saved-box span {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* 🌿 Navbar */
+.navbar {
+  width: 100%;
+  background: linear-gradient(90deg, #bde0fe, #caffbf);
+  padding: 6px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+.nav-title {
+  color: #355070;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #355070;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Right side buttons */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #355070;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #264653;
+  transform: scale(1.05);
+}
+
+/* To prevent content hiding under navbar */
+.container, .gratitude-container {
+  margin-top: 70px;
+}
+
+/* Back Button */
+.back-btn {
+  display: inline-block;
+  margin: 1.5rem 3rem;
+  text-decoration: none;
+  color: #6c63ff;
+  font-weight: 500;
+  background: #f1f0fb;
+  padding: 1rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #e0dcfb;
+  transform: translateX(-3px);
+}

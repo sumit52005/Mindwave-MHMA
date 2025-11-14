@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outdoor & Movement | MindEase</title>
+  <link rel="stylesheet" href="outdoor.css"/>
+</head>
+
+
+
+<body>
+ <a href="activities.html" class="back-to-hub">  &larr;Back</a>
+ 
+
+
+  <div class="overlay"></div>
+
+  <div class="container fade-in">
+    <h1>Outdoor & Movement 🌤️</h1>
+    <p class="intro-text">Reconnect with nature, refresh your body, and calm your mind 🌿</p>
+
+    <!-- Start Button -->
+    <div class="start-section">
+      <button id="startBtnMain">Start My Activity 🏃‍♀️</button>
+    </div>
+
+    <!-- Activity Section -->
+    <div class="activity-section hidden">
+      <div class="activity-card">
+        <img id="activityImg" src="" alt="Activity" />
+        <h2 id="activity">Your activity will appear here</h2>
+        <button id="newActivity">🔄 Try Another</button>
+      </div>
+    </div>
+
+    <!-- Timer Section -->
+    <div class="timer-section hidden">
+      <h2 id="timer">00:00</h2>
+      <div class="timer-buttons">
+        <button id="startTimer">▶ Start</button>
+        <button id="pauseTimer">⏸ Pause</button>
+        <button id="resetTimer">🔁 Reset</button>
+      </div>
+    </div>
+
+    <!-- Quotes Section -->
+    <div class="quotes-section hidden">
+      <div class="quote-card">
+        <p id="quote">“Movement is medicine for the mind.” 💭</p>
+      </div>
+    </div>
+
+    <!-- Done Section -->
+    <div class="done-section hidden">
+      <button id="doneBtn">I'm Done ✅</button>
+    </div>
+  </div>
+
+  <audio id="successSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b9d7d35ae.mp3?filename=success-1-6297.mp3"></audio>
+
+  <script>
+    const startMainBtn = document.getElementById("startBtnMain");
+    const activitySection = document.querySelector(".activity-section");
+    const timerSection = document.querySelector(".timer-section");
+    const quotesSection = document.querySelector(".quotes-section");
+    const doneSection = document.querySelector(".done-section");
+    const activityText = document.getElementById("activity");
+    const activityImg = document.getElementById("activityImg");
+    const newActivityBtn = document.getElementById("newActivity");
+    const quote = document.getElementById("quote");
+    const doneBtn = document.getElementById("doneBtn");
+    const successSound = document.getElementById("successSound");
+
+    const activities = [
+      { text: "Take a peaceful nature walk 🌳", img: "https://cdn-icons-png.flaticon.com/512/5042/5042326.png" },
+      { text: "Do gentle stretching under sunlight ☀️", img: "https://cdn-icons-png.flaticon.com/512/8653/8653751.png" },
+      { text: "Dance for one song — just move freely 💃", img: "https://cdn-icons-png.flaticon.com/512/3964/3964983.png" },
+      { text: "Sit in the park and focus on your breath 🌸", img: "https://cdn-icons-png.flaticon.com/512/4150/4150897.png" },
+      { text: "Walk barefoot on grass for 2 minutes 🍃", img: "https://cdn-icons-png.flaticon.com/512/10488/10488047.png" },
+      { text: "Try slow yoga stretches 🧘‍♀️", img: "https://cdn-icons-png.flaticon.com/512/616/616408.png" }
+    ];
+
+    const quotes = [
+      "“You’re doing something beautiful for your body.” 🌼",
+      "“Even the smallest movement counts.” ✨",
+      "“Let your mind breathe with every step.” 🍃",
+      "“A walk outside can clear your entire soul.” 🌤️",
+      "“You don’t have to go fast; just move.” 🩷"
+    ];
+
+    const bgImages = [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMvQl1NLA2ZP8fb8iHzNkHpqJjKdJEWuuNmg&s",
+      "https://lifeloveanddirtydishes.com/wp-content/uploads//2024/05/iStock-1564441923.jpg",
+      "https://citizenadvocates.net/wp-content/uploads/2021/03/cav_blog_3-2-21-850x575.jpg",
+      "https://images.pexels.com/photos/33582/sunrise-phu-quoc-island-ocean.jpg?cs=srgb&dl=pexels-pixabay-33582.jpg&fm=jpg"
+    ];
+
+    let bgIndex = 0;
+    setInterval(() => {
+      document.body.style.backgroundImage = `url(${bgImages[bgIndex]})`;
+      bgIndex = (bgIndex + 1) % bgImages.length;
+    }, 6000);
+
+    // Timer logic
+    let timer, seconds = 0;
+    const timerDisplay = document.getElementById("timer");
+    document.getElementById("startTimer").onclick = () => {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        seconds++;
+        let mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+        let secs = String(seconds % 60).padStart(2, "0");
+        timerDisplay.textContent = `${mins}:${secs}`;
+      }, 1000);
+    };
+    document.getElementById("pauseTimer").onclick = () => clearInterval(timer);
+    document.getElementById("resetTimer").onclick = () => {
+      clearInterval(timer);
+      seconds = 0;
+      timerDisplay.textContent = "00:00";
+    };
+
+    startMainBtn.addEventListener("click", () => {
+      document.querySelector(".start-section").classList.add("hidden");
+      activitySection.classList.remove("hidden");
+      timerSection.classList.remove("hidden");
+      quotesSection.classList.remove("hidden");
+      doneSection.classList.remove("hidden");
+      showNewActivity();
+      rotateQuotes();
+    });
+
+    newActivityBtn.addEventListener("click", showNewActivity);
+    function showNewActivity() {
+      activityText.classList.add("fade-out");
+      setTimeout(() => {
+        const random = activities[Math.floor(Math.random() * activities.length)];
+        activityText.textContent = random.text;
+        activityImg.src = random.img;
+        activityText.classList.remove("fade-out");
+        activityText.classList.add("fade-in");
+      }, 300);
+    }
+
+    function rotateQuotes() {
+      setInterval(() => {
+        quote.classList.add("fade-out");
+        setTimeout(() => {
+          const random = quotes[Math.floor(Math.random() * quotes.length)];
+          quote.textContent = random;
+          quote.classList.remove("fade-out");
+          quote.classList.add("fade-in");
+        }, 300);
+      }, 4000);
+    }
+
+    doneBtn.addEventListener("click", () => {
+      successSound.play();
+      doneBtn.textContent = "Amazing! You did it! 🎉";
+      doneBtn.style.background = "#00c853";
+      setTimeout(() => location.reload(), 4000);
+    });
+
+    <button id="logout-btn" onclick="logout()" style="
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+">Logout</button>
+
+  </script>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/authentication.js"></script>
+</body>
+</html>
+

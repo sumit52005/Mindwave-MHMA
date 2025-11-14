@@ -1,0 +1,320 @@
+/* ===========================
+   🌸 GENERAL STYLING
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #d9f1f1, #fefefe);
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* ===========================
+   🌿 NAVBAR
+=========================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  z-index: 1000;
+  transition: all 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #056674;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #056674;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar ul li a:hover {
+  color: #028090;
+}
+
+/* ===========================
+   🍃 HAMBURGER MENU
+=========================== */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: #056674;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.menu-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ===========================
+   🌅 HERO SECTION
+=========================== */
+.hero {
+  background: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+}
+
+.hero-text {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  max-width: 700px;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.explore-btn {
+  background: #028090;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.explore-btn:hover {
+  background: #02c39a;
+}
+
+/* ===========================
+   🧘‍♀ ACTIVITIES SECTION
+=========================== */
+.activities-section {
+  padding: 100px 50px;
+  text-align: center;
+}
+
+.activities-section h2 {
+  font-size: 2.2rem;
+  color: #056674;
+  margin-bottom: 50px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.activity-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.activity-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.activity-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-content h3 {
+  color: #028090;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.card-content p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.activity-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================
+   🌼 TUTOR SECTION
+=========================== */
+.tutor-section {
+  background: linear-gradient(135deg, #f0fdfa, #e4f9f5);
+  padding: 80px 50px;
+  text-align: center;
+}
+
+.tutor-section h2 {
+  font-size: 2rem;
+  color: #056674;
+  margin-bottom: 40px;
+}
+
+.tutor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.tutor-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.tutor-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tutor-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.tutor-card h3 {
+  margin-top: 15px;
+  color: #028090;
+}
+
+.tutor-card p {
+  padding: 10px 15px 20px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tutor-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================
+   📱 RESPONSIVENESS
+=========================== */
+@media (max-width: 900px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .activities-section, .tutor-section {
+    padding: 70px 20px;
+  }
+
+  .navbar {
+    padding: 15px 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar ul {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 70%;
+    background: rgba(255, 255, 255, 0.9);
+    flex-direction: column;
+    align-items: center;
+    display: none;
+    padding: 20px;
+    border-radius: 0 0 15px 15px;
+  }
+
+  .navbar ul.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+/* Back Button */
+.back-btn {
+  display: inline-block;
+  margin: 1.5rem 3rem;
+  text-decoration: none;
+  color: #6c63ff;
+  font-weight: 500;
+  background: #f1f0fb;
+  padding: 1rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #e0dcfb;
+  transform: translateX(-3px);
+}

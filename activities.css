@@ -1,0 +1,134 @@
+/* Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom right, #dcd6f7, #e8f0fe);
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background-color: #f1f0fb;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #7b68ee;
+}
+
+nav a {
+  margin-left: 2rem;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover, nav a.active {
+  color: #7b68ee;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 6rem 3rem;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  color: #6c63ff;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Activities Section */
+.activities {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding:3rem 4rem;
+}
+
+.activity-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 4rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activity-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.activity-card h2 {
+  color: #7b68ee;
+  margin-bottom: 1rem;
+}
+
+.activity-card p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* Back Button */
+.back-btn {
+  display: inline-block;
+  margin: 1.5rem 3rem;
+  text-decoration: none;
+  color: #6c63ff;
+  font-weight: 500;
+  background: #f1f0fb;
+  padding: 1rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #e0dcfb;
+  transform: translateX(-3px);
+}
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #f1f0fb;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 3rem;
+}
+
+
+.btn {
+  display: inline-block;
+  background-color: #4086a4;
+  color: #fff;
+  padding: 4px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #8780b8;
+}

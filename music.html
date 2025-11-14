@@ -1,0 +1,262 @@
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music & Relaxation</title>
+  <style>
+    /* --- Global Styles --- */
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #d4f0f7, #e2b4f0);
+      background-size: 400% 400%;
+      animation: bgFlow 20s ease infinite;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* --- Header --- */
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      animation: fadeDown 1.5s ease;
+      position: relative;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #6c63ff;
+      font-size: 3em;
+      margin: 0;
+      letter-spacing: 1px;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    h2 {
+      color: #f8f8f8;
+      font-weight: 400;
+      margin-top: 10px;
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+
+    /* --- Back Button --- */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      text-decoration: none;
+      color: #6c63ff;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-button:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    
+
+    /* --- Container for both sections --- */
+    .main-sections {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 40px;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: 50px;
+    }
+
+    /* --- Section Styles --- */
+    section {
+      flex: 1 1 500px;
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeUp 2s ease;
+      min-height: 450px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section h2 {
+      font-size: 1.8em;
+      color: #6c63ff;
+      margin-bottom: 10px;
+    }
+
+    section p {
+      color: black;
+      margin-bottom: 30px;
+      font-size: 1em;
+    }
+
+    /* --- Card Layout --- */
+    .card-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .content-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 20px;
+      width: 260px;
+      text-align: center;
+      color: #6c63ff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .content-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .content-card img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .content-card h3 {
+      margin: 10px 0 5px;
+      font-size: 1.2em;
+    }
+
+    .content-card p {
+      font-size: 0.9em;
+      color: black;
+    }
+
+    .content-card a {
+      display: inline-block;
+      margin-top: 12px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #6c63ff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .content-card a:hover {
+      background-color: #5847e8;
+      transform: scale(1.05);
+    }
+
+    
+
+    /* --- Responsive --- */
+    @media (max-width: 1000px) {
+      .main-sections {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+  <header>
+    <a href="activities.html" class="back-button">← Back </a>
+    <h1>Music & Relaxation</h1>
+    <h2>Let soothing sounds ease your mind and lighten your mood</h2>
+    
+  </header>
+
+  <!-- Playlist + Podcast Sections -->
+  <div class="main-sections">
+
+    <!-- Playlist Section -->
+    <section id="playlist-section">
+      <h2>Curated Relaxation Playlist</h2>
+      <p>Enjoy calm, nature-inspired melodies that help you unwind.</p>
+      <div class="card-wrapper">
+        <div class="content-card">
+          <img src="https://i.ytimg.com/vi/urbfqbFsm_U/maxresdefault.jpg" alt="Relaxation Playlist">
+          <h3>Ultimate Relaxation</h3>
+          <p>Soft ambient music, rain sounds, and peaceful tunes for your mind.</p>
+          <a href="https://youtube.com/playlist?list=RD1ZYbU82GVz4&playnext=1&si=BCzoBkQF14OUSmui" target="_blank">🎵 Listen</a>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Podcast Section -->
+    <section id="podcast-section">
+      <h2>Mindfulness Podcasts</h2>
+      <p>Listen to soothing talks and guided reflections for inner peace.</p>
+      <div class="card-wrapper">
+        <div class="content-card">
+          <img src="https://www.shutterstock.com/image-photo/home-studio-podcast-interior-microphone-260nw-1931610188.jpg" alt="Mindful Moments Podcast">
+          <h3>Mindful Moments</h3>
+          <p>Short episodes to help you slow down, breathe, and focus.</p>
+          <a href="https://youtube.com/playlist?list=PLsLkC-rQ5--wMW8WEg-ETZ86J9Y0YjRHn&si=VHKLL09kuqvdGLTs" target="_blank">🎧 Listen</a>
+        </div>
+        
+      </div>
+    </section>
+
+  </div>
+
+  <button id="logout-btn" onclick="logout()" style="
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+">Logout</button>
+
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/authetication.js"></script>
+
+  
+</body>
+</html>

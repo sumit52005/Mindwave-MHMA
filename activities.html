@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindEase | Activities</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="activities.css">
+</head>
+
+
+
+<body>
+
+  <!-- 🌸 Header -->
+  <header>
+    <div class="logo">🧠 MindEase Portal</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About us</a>
+      <a href="#">Research</a>
+
+    </nav>
+  </header>
+<a href="explore.html" class="back-btn">⬅ Back</a>
+  <!-- 🌿 Hero Section -->
+  <section class="hero">
+    <h1>One Small Step a Day for a Calmer You 🌸</h1>
+    <p>Explore mindful activities to relax, recharge, and grow daily.</p>
+  </section>
+
+  <!-- 💫 Activities Section -->
+  <section class="activities">
+    <div class="activity-card">
+      <h2>🧘‍♀ Mindfulness & Meditation</h2>
+      <p>Take 5 deep breaths. Focus on your inhale and exhale. Be present, right here, right now.</p>
+      <a href="mindfulness.html" class="btn">Click</a>
+    </div>
+
+    <div class="activity-card">
+      <h2>🎵 Music & Relaxation</h2>
+      <p>Play a soothing playlist. Let the rhythm calm your thoughts and lighten your mood.</p>
+      <a href="music.html" class="btn">Click</a>
+    </div>
+
+    <div class="activity-card">
+      <h2>🌳 Outdoor & Movement</h2>
+      <p>Step outside for 10 minutes. Feel the wind, notice the sky, and stretch your body.</p>
+              <a href="outdoor.html" class="btn">Click</a>
+    </div>
+
+    <div class="activity-card">
+      <h2>💬 Reflection & Gratitude</h2>
+      <p>Send a kind message to someone or compliment yourself for your effort today.</p>
+      <a href="reflection.html" class="btn">Click</a>
+    </div>
+  </section>
+
+  <!-- 🌈 Footer -->
+  <footer>
+    <p>Made with 💜 for your peace of mind | MindEase</p>
+  </footer>
+
+  <button id="logout-btn" onclick="logout()" style="
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+">Logout</button>
+
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/authentication.js"></script>
+
+</body>
+</html>

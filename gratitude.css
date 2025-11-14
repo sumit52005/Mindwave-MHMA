@@ -1,0 +1,290 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #e2d1f9, #f8e7f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  color: #333;
+}
+
+.gratitude-container {
+  text-align: center;
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 25px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 480px;
+  animation: fadeIn 1.5s ease;
+  position: relative;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 1.5rem;
+}
+
+.gratitude-card {
+  background: linear-gradient(145deg, #f3e7ff, #ffffff);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+  animation: slideIn 1.5s ease;
+}
+
+#gratitude-message {
+  margin-top: 1rem;
+  font-style: italic;
+  color: #4b0082;
+  font-size: 1.1rem;
+}
+
+.reflection-button {
+  display: inline-block;
+  padding: 12px 25px;
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #a77ff8, #8a2be2);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+  transition: all 0.3s ease;
+}
+
+.reflection-button:hover {
+  background: linear-gradient(135deg, #8a2be2, #a77ff8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mood-based animations */
+.happy-animation::before {
+ /* content: "❤️💖💕💗";*/
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  animation: floatHearts 3s ease-in-out infinite;
+}
+
+.grateful-animation::before {
+  content: "🙏✨🌸";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  animation: gentleGlow 3s ease-in-out infinite;
+}
+
+.calm-animation::before {
+ /* content: "🌊🧘‍♀";*/
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  animation: wave 3s ease-in-out infinite;
+}
+
+.tired-animation::before {
+  content: "🌙😴";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  animation: fadeRest 3s ease-in-out infinite;
+}
+
+.anxious-animation::before {
+  content: "💜🕊️";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.default-animation::before {
+  content: "💫🌟";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+@keyframes floatHearts {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+@keyframes gentleGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+}
+
+@keyframes fadeRest {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(0.9); }
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: translateX(-50%) rotate(0deg); }
+  50% { transform: translateX(-50%) rotate(180deg); }
+}
+
+/* 🌿 Navbar Styling */
+.navbar {
+  width: 100%;
+  background: linear-gradient(90deg, #e2d1f9, #f8e7f6);
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-title {
+  color: #4b0082;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.back-btn {
+  margin-left: 15px;
+  background-color: #b88de2;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #a36fd6;
+  transform: scale(1.05);
+}
+
+/* Prevent hiding behind navbar */
+.gratitude-container {
+  margin-top: 80px;
+}
+/* 🌿 Navbar */
+.navbar {
+  width: 100%;
+  background: linear-gradient(90deg, #bde0fe, #caffbf);
+  padding: 6px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+.nav-title {
+  color: #355070;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #355070;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Right side buttons */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #355070;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #264653;
+  transform: scale(1.05);
+}
+
+/* To prevent content hiding under navbar */
+.container, .gratitude-container {
+  margin-top: 70px;
+}

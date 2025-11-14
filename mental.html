@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Health Companion - Reflect & Heal</title>
+  <style>
+    /* ---------- Global Styles ---------- */
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f3f4f6;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { margin-bottom: 10px; }
+    a { text-decoration: none; }
+
+    /* ---------- Header ---------- */
+    header {
+      background: none;
+      color: #6c63ff;
+      text-align: center;
+      padding: 50px 20px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      box-shadow: none;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-top: 12px;
+    }
+
+    /* --- Back Button --- */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      text-decoration: none;
+      color: #6c63ff;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-button:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* ---------- Hero Section ---------- */
+    .intro {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 30px;
+      border-radius: 40px;
+      margin: 60px auto;
+      width: 90%;
+      max-width: 1200px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .intro h2 { font-size: 2.5rem; font-weight: 600; }
+    .intro p { font-size: 1.2rem; max-width: 700px; margin: 20px auto 0; opacity: 0.95; }
+
+    /* ---------- Mental Health Reflection Assistant Section ---------- */
+    #mental-check {
+      width: 90%;
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 50px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #e0f7fa, #e6eeff);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #mental-check:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    #mental-check h2 { font-size: 2rem; color: #334155; margin-bottom: 10px; }
+    #mental-check p { font-size: 1rem; color: #475569; margin-bottom: 25px; }
+
+    #userInput {
+      width: 100%;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 1rem;
+      resize: vertical;
+      min-height: 130px;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+
+    #userInput:focus {
+      outline: none;
+      border-color: #c1d1ec;
+      box-shadow: 0 0 8px rgba(59,130,246,0.3);
+    }
+
+    #analyzeBtn {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      color: white;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #analyzeBtn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(37,99,235,0.3);
+    }
+
+    #result {
+      display: none;
+      margin-top: 30px;
+      background: #f0fdf4;
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      animation: fadeIn 0.6s ease;
+    }
+
+    #result h3 { color: #15803d; margin-bottom: 10px; }
+    #result p { color: #374151; font-size: 1rem; }
+    #result iframe {
+      border-radius: 15px;
+      margin-top: 15px;
+      width: 100%;
+      max-width: 600px;
+      height: 320px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- Conditions Section ---------- */
+    #conditions {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    #conditions h2 {
+      font-size: 2.2rem;
+      color: #1e3a8a;
+      margin-bottom: 50px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .conditions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .condition-card {
+      background: linear-gradient(145deg, #f9fafb, #eef2ff);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .condition-card:hover { transform: translateY(-7px); box-shadow: 0 10px 25px rgba(37,99,235,0.15); }
+    .condition-card h3 { color: #acb9e4; margin-bottom: 10px; font-size: 1.3rem; }
+    .condition-card .learnmore-btn {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .condition-card .learnmore-btn:hover { opacity: 0.9; transform: scale(1.03); }
+
+    /* ---------- Side by Side Support Section ---------- */
+    .support-section {
+      display: flex;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .video-side,
+    .help-side {
+      flex: 1;
+      min-width: 300px;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-side {
+      background: linear-gradient(135deg, #e0f7fa, #f0fdf4);
+    }
+
+    .video-side iframe {
+      border-radius: 20px;
+      width: 100%;
+      height: 400px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .video-side iframe:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.18);
+    }
+
+    .help-side {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      
+      border-top: 4px solid #e0f2fe;
+      text-align: center;
+    }
+
+    .help-side button {
+      background: linear-gradient(90deg, #ef4444, #b91c1c);
+      border: none;
+      color: white;
+      padding: 14px 35px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .help-side button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(220,38,38,0.3);
+    }
+
+    /* Hover effect for both cards */
+    .video-side:hover, .help-side:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .intro h2 { font-size: 1.8rem; }
+      #mental-check { padding: 35px; }
+      .support-section { flex-direction: column; gap: 30px; }
+    }
+
+    /* ---------- Real Stories Section (Full Width) ---------- */
+  .stories {
+    width: 100%; /* full screen width */
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe); /* full width gradient */
+    text-align: center;
+  }
+
+  .stories h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #1e3a8a;
+  }
+
+  .story-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 25px;
+    padding: 10px 20px;
+  }
+
+  .story {
+    background: white;
+    border-left: 6px solid #3b82f6; /* blue accent */
+    border-radius: 20px;
+    padding: 30px;
+    min-width: 320px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .story:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(59,130,246,0.15);
+  }
+
+  /* Hide horizontal scrollbar but still allow scrolling */
+  .story-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  .story-container::-webkit-scrollbar-thumb {
+    background: rgba(59,130,246,0.4);
+    border-radius: 4px;
+  }
+  .story-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  @media (max-width: 768px) {
+    .story-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+  </style>
+</head>
+<body>
+
+   
+
+  <header>
+    <a href="activities.html" class="back-button">⬅ Back</a>
+    <h1>Mental Health Companion</h1>
+    <p>Your daily space for reflection, calmness & support 🌿</p>
+  </header>
+
+  <section class="intro">
+    <h2>Welcome to Your Healing Journey</h2>
+    <p>Take a gentle pause, breathe, and share how you're feeling. Every thought matters, and every emotion is valid.</p>
+  </section>
+
+  <section id="mental-check">
+    <h2>🧠 Mental Health Reflection Assistant</h2>
+    <p>Share your feelings and symptoms — we’ll gently guide you with helpful insights and videos.</p>
+    <textarea id="userInput" rows="8" placeholder="Describe how you're feeling..."></textarea>
+    <button id="analyzeBtn">Analyze My Feelings</button>
+
+    <div id="result">
+      <h3>💡 Suggested Support:</h3>
+      <p id="message"></p>
+      <div id="video"></div>
+      <p style="margin-top:15px;">
+        <a href="https://www.youtube.com/watch?v=2Uv2Jr_K-Ro" target="_blank" style="color:#16a34a;">🌿 Try Guided Relaxation</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="conditions">
+    <h2>Common Mental Health Topics</h2>
+    <div class="conditions">
+      <div class="condition-card"><h3>Anxiety</h3><p>Feeling tense or worried?</p><a href="https://my.clevelandclinic.org/health/diseases/9536-anxiety-disorders" class="learnmore-btn"> Learn More </a></div>
+      <div class="condition-card"><h3>Depression</h3><p>Persistent sadness or loss of motivation?</p><a href="https://my.clevelandclinic.org/health/diseases/9290-depression" class="learnmore-btn"> Learn More </a></div>
+      <div class="condition-card"><h3>Stress & Burnout</h3><p>Feeling overwhelmed by tasks?</p><a href="https://my.clevelandclinic.org/health/diseases/11874-stress" class="learnmore-btn"> Learn More </a></div>
+      <div class="condition-card"><h3>OCD</h3><p>Repetitive thoughts or routines?</p><a href="https://my.clevelandclinic.org/health/diseases/9490-ocd-obsessive-compulsive-disorder" class="learnmore-btn"> Learn More </a></div>
+    </div>
+  </section>
+
+  <section class="support-section">
+    <div class="video-side">
+      <h2>🎥 Mental Health Awareness</h2>
+      <p>Learn about mental well-being through expert insights, inspiring stories, and guided techniques.</p>
+      <iframe src="https://www.youtube.com/embed/z-IR48Mb3W0" allowfullscreen></iframe>
+    </div>
+
+    <div class="help-side">
+      <h2>Need Professional Support?</h2>
+      <p>If sadness, stress, or anxiety interfere with daily life — it’s time to reach out.</p>
+      <img src="https://www.shutterstock.com/image-photo/counseling-on-depression-apathy-young-600nw-2281486423.jpg" alt="counselling image">
+
+      <button onclick="alert('Reach a counselor or call your local helpline (e.g., 988 in the US).')">
+        Talk to a Counselor
+      </button>
+    </div>
+  </section>
+
+  <section class="stories">
+    <h2>💬 Real Stories of Hope</h2>
+    <div class="story-container">
+      <div class="story"><p>“I used to feel lost, but therapy helped me find balance again.” – Anonymous</p></div>
+      <div class="story"><p>“Journaling and meditation changed my mornings.” – Sarah</p></div>
+      <div class="story"><p>“Opening up to friends gave me strength to heal.” – John</p></div>
+      <div class="story"><p>“Mindfulness and breathing exercises have transformed my daily life.” – Alex</p></div>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('analyzeBtn').addEventListener('click', () => {
+      const input = document.getElementById('userInput').value.toLowerCase();
+      const resultDiv = document.getElementById('result');
+      let message = "", video = "";
+
+      if (input.includes("sad") || input.includes("hopeless")) {
+        message = "You might be feeling down or low on energy. Try a light walk or talking to someone you trust.";
+        video = '<iframe src="https://www.youtube.com/embed/z-IR48Mb3W0"></iframe>';
+      } else if (input.includes("anxious") || input.includes("worry")) {
+        message = "You may be experiencing anxiety. Try slow breathing or mindfulness for grounding.";
+        video = '<iframe src="https://www.youtube.com/embed/WWloIAQpMcQ"></iframe>';
+      } else if (input.includes("tired") || input.includes("sleep")) {
+        message = "Rest and proper sleep are vital. Try relaxation or breathing techniques before bed.";
+        video = '<iframe src="https://www.youtube.com/embed/1KkKxw3s9Wg"></iframe>';
+      } else {
+        message = "Every feeling tells a story. Be gentle with yourself — peace begins with awareness.";
+        video = '<iframe src="https://www.youtube.com/embed/2Uv2Jr_K-Ro"></iframe>';
+      }
+
+      document.getElementById('message').innerText = message;
+      document.getElementById('video').innerHTML = video;
+      resultDiv.style.display = "block";
+    });
+  </script>
+
+  <button id="logout-btn" onclick="logout()" style="
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: white;
+  color: #0077b6;
+  border: 2px solid #0077b6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+">Logout</button>
+
+
+
+ <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <script src="js/supabase-init.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/mood.js"></script>
+  <script src="js/authentication.js"></script>
+</body>
+</html>
