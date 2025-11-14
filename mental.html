@@ -250,8 +250,7 @@
     }
 
     .help-side {
-    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-      
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
       border-top: 4px solid #e0f2fe;
       text-align: center;
     }
@@ -273,13 +272,11 @@
       box-shadow: 0 8px 20px rgba(220,38,38,0.3);
     }
 
-    /* Hover effect for both cards */
     .video-side:hover, .help-side:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 35px rgba(0,0,0,0.12);
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       header h1 { font-size: 2.2rem; }
       .intro h2 { font-size: 1.8rem; }
@@ -287,66 +284,63 @@
       .support-section { flex-direction: column; gap: 30px; }
     }
 
-    /* ---------- Real Stories Section (Full Width) ---------- */
-  .stories {
-    width: 100%; /* full screen width */
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #f0f9ff, #e0f2fe); /* full width gradient */
-    text-align: center;
-  }
-
-  .stories h2 {
-    font-size: 2rem;
-    margin-bottom: 40px;
-    color: #1e3a8a;
-  }
-
-  .story-container {
-    display: flex;
-    overflow-x: auto;
-    gap: 25px;
-    padding: 10px 20px;
-  }
-
-  .story {
-    background: white;
-    border-left: 6px solid #3b82f6; /* blue accent */
-    border-radius: 20px;
-    padding: 30px;
-    min-width: 320px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .story:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(59,130,246,0.15);
-  }
-
-  /* Hide horizontal scrollbar but still allow scrolling */
-  .story-container::-webkit-scrollbar {
-    height: 8px;
-  }
-  .story-container::-webkit-scrollbar-thumb {
-    background: rgba(59,130,246,0.4);
-    border-radius: 4px;
-  }
-  .story-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  @media (max-width: 768px) {
-    .story-container {
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+    /* ---------- Real Stories Section ---------- */
+    .stories {
+      width: 100%;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      text-align: center;
     }
-  }
+
+    .stories h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #1e3a8a;
+    }
+
+    .story-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 25px;
+      padding: 10px 20px;
+    }
+
+    .story {
+      background: white;
+      border-left: 6px solid #3b82f6;
+      border-radius: 20px;
+      padding: 30px;
+      min-width: 320px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .story:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(59,130,246,0.15);
+    }
+
+    .story-container::-webkit-scrollbar {
+      height: 8px;
+    }
+    .story-container::-webkit-scrollbar-thumb {
+      background: rgba(59,130,246,0.4);
+      border-radius: 4px;
+    }
+    .story-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    @media (max-width: 768px) {
+      .story-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+    }
   </style>
 </head>
 <body>
-
-   
 
   <header>
     <a href="activities.html" class="back-button">⬅ Back</a>
@@ -413,19 +407,36 @@
     </div>
   </section>
 
+  <!-- ⭐⭐⭐ FEEDBACK BOX ADDED HERE ⭐⭐⭐ -->
+  <section style="width:90%; max-width:800px; margin:60px auto; background:white; padding:30px; border-radius:15px; box-shadow:0 4px 14px rgba(0,0,0,0.1);">
+    <h2 style="margin-bottom:10px;">💬 Share Your Feedback</h2>
+    <textarea id="feedbackInput" placeholder="Write your feedback here..." style="width:100%; padding:12px; border-radius:10px; border:1px solid #cbd5e1; min-height:120px;"></textarea>
+    <button id="sendFeedback" style="margin-top:12px; padding:12px 25px; background:#3b82f6; color:white; border:none; border-radius:8px; cursor:pointer; font-size:1rem;">
+      Submit Feedback
+    </button>
+    <p id="feedbackStatus" style="margin-top:12px; font-weight:600;"></p>
+  </section>
+
+  <!-- ⭐⭐⭐ CHAT LOGIC + SAVE TO SUPABASE ⭐⭐⭐ -->
   <script>
-    document.getElementById('analyzeBtn').addEventListener('click', () => {
-      const input = document.getElementById('userInput').value.toLowerCase();
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+      const input = document.getElementById('userInput').value;
+      const lower = input.toLowerCase();
       const resultDiv = document.getElementById('result');
       let message = "", video = "";
 
-      if (input.includes("sad") || input.includes("hopeless")) {
+      if (!input.trim()) {
+        window.showNotification("Please write something first", "error");
+        return;
+      }
+
+      if (lower.includes("sad") || lower.includes("hopeless")) {
         message = "You might be feeling down or low on energy. Try a light walk or talking to someone you trust.";
         video = '<iframe src="https://www.youtube.com/embed/z-IR48Mb3W0"></iframe>';
-      } else if (input.includes("anxious") || input.includes("worry")) {
+      } else if (lower.includes("anxious") || lower.includes("worry")) {
         message = "You may be experiencing anxiety. Try slow breathing or mindfulness for grounding.";
         video = '<iframe src="https://www.youtube.com/embed/WWloIAQpMcQ"></iframe>';
-      } else if (input.includes("tired") || input.includes("sleep")) {
+      } else if (lower.includes("tired") || lower.includes("sleep")) {
         message = "Rest and proper sleep are vital. Try relaxation or breathing techniques before bed.";
         video = '<iframe src="https://www.youtube.com/embed/1KkKxw3s9Wg"></iframe>';
       } else {
@@ -436,6 +447,8 @@
       document.getElementById('message').innerText = message;
       document.getElementById('video').innerHTML = video;
       resultDiv.style.display = "block";
+
+      await saveChatToSupabase(input, message);
     });
   </script>
 
@@ -455,13 +468,111 @@
   z-index: 1000;
 ">Logout</button>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="js/supabase-init.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mood.js"></script>
+<script src="js/authentication.js"></script>
 
+<!-- ⭐⭐⭐ SAVE CHAT TO SUPABASE FUNCTION ⭐⭐⭐ -->
+<script>
+async function saveChatToSupabase(userMessage, aiReply) {
+  try {
+    const { data } = await window.supabase.auth.getSession();
+    const session = data?.session;
 
- <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    if (!session) {
+      window.showNotification("Please sign in first", "error");
+      return;
+    }
 
-  <script src="js/supabase-init.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/mood.js"></script>
-  <script src="js/authentication.js"></script>
+    const userId = session.user.id;
+
+    const { error } = await window.supabase
+      .from("chat_history")
+      .insert([
+        {
+          user_id: userId,
+          user_message: userMessage,
+          ai_reply: aiReply
+        }
+      ]);
+
+    if (error) {
+      console.error(error);
+      window.showNotification("Failed to save chat ❌", "error");
+    }
+
+  } catch (err) {
+    console.error(err);
+    window.showNotification("Unexpected error ❌", "error");
+  }
+}
+</script>
+
+<!-- ⭐⭐⭐ FEEDBACK SAVE — unchanged ⭐⭐⭐ -->
+<script>
+async function saveFeedbackToSupabase(message) {
+  try {
+    const { data } = await window.supabase.auth.getSession();
+    const session = data?.session;
+
+    if (!session) {
+      window.showNotification("Please sign in first", "error");
+      return false;
+    }
+
+    const userId = session.user.id;
+
+    const { error } = await window.supabase
+      .from("feedback")
+      .insert([
+        {
+          user_id: userId,
+          message: message
+        }
+      ]);
+
+    if (error) {
+      console.error(error);
+      window.showNotification("Error saving feedback ❌", "error");
+      return false;
+    }
+
+    return true;
+
+  } catch (err) {
+    console.error(err);
+    window.showNotification("Unexpected error ❌", "error");
+    return false;
+  }
+}
+
+document.getElementById("sendFeedback").addEventListener("click", async () => {
+  const message = document.getElementById("feedbackInput").value.trim();
+  const status = document.getElementById("feedbackStatus");
+
+  if (!message) {
+    status.textContent = "Please write something before submitting 🌿";
+    status.style.color = "#ff3b3b";
+    return;
+  }
+
+  status.textContent = "Submitting...";
+  status.style.color = "#ffdd57";
+
+  const success = await saveFeedbackToSupabase(message);
+
+  if (success) {
+    status.textContent = "Thank you for your feedback 💚";
+    status.style.color = "#00c853";
+    document.getElementById("feedbackInput").value = "";
+  } else {
+    status.textContent = "Failed to submit feedback ❌";
+    status.style.color = "#ff3b3b";
+  }
+});
+</script>
+
 </body>
 </html>

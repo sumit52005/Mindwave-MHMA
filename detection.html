@@ -8,13 +8,10 @@
   <link rel="stylesheet" href="detection.css">
 </head>
 <body>
-  
 
-  <!-- Navbar (reuse your header style) -->
+  <!-- Navbar -->
   <header class="navbar">
     <div class="logo">🧠 MindEase Portal</div>
-      
-    </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="#">Activities</a>
@@ -24,14 +21,15 @@
     </nav>
   </header>
 
-<a href="explore.html" class="back-btn">⬅ Back</a>
+  <a href="explore.html" class="back-btn">⬅ Back</a>
 
   <section class="quiz-container">
-    
     <h1>Quick Mood Self-Check</h1>
-    <p>Answer the following 8 questions honestly. This is not a medical diagnosis but a quick check to understand how you might be feeling.</p>
+    <p>Answer the following 8 questions honestly. This is not a medical diagnosis.</p>
 
     <form id="quizForm">
+
+      <!-- YOUR QUESTION BLOCKS (unchanged) -->
       <div class="question" id="q1">
         <p>1. In the past two weeks, how often have you felt little interest or pleasure in doing things?</p>
         <label><input type="radio" name="q1" value="0"> Not at all</label>
@@ -73,7 +71,7 @@
       </div>
 
       <div class="question" id="q6">
-        <p>6. In the past two weeks, how often have you had trouble concentrating on things, such as reading or watching something?</p>
+        <p>6. In the past two weeks, how often have you had trouble concentrating?</p>
         <label><input type="radio" name="q6" value="0"> Not at all</label>
         <label><input type="radio" name="q6" value="1"> Several days</label>
         <label><input type="radio" name="q6" value="2"> More than half the days</label>
@@ -81,7 +79,7 @@
       </div>
 
       <div class="question" id="q7">
-        <p>7. In the past two weeks, how often have you felt that you were moving or speaking so slowly or being so restless that other people noticed?</p>
+        <p>7. In the past two weeks, how often have you felt restless or slowed down?</p>
         <label><input type="radio" name="q7" value="0"> Not at all</label>
         <label><input type="radio" name="q7" value="1"> Several days</label>
         <label><input type="radio" name="q7" value="2"> More than half the days</label>
@@ -89,7 +87,7 @@
       </div>
 
       <div class="question" id="q8">
-        <p>8. In the past two weeks, how often have you had thoughts that you would be better off dead or of hurting yourself?</p>
+        <p>8. In the past two weeks, how often have you had harmful thoughts?</p>
         <label><input type="radio" name="q8" value="0"> Not at all</label>
         <label><input type="radio" name="q8" value="1"> Several days</label>
         <label><input type="radio" name="q8" value="2"> More than half the days</label>
@@ -97,6 +95,7 @@
       </div>
 
       <button type="button" id="submitBtn">Get Result</button>
+
     </form>
 
     <div id="resultBox" class="hidden">
@@ -107,73 +106,132 @@
     </div>
 
   </section>
-  
 
   <footer>
     <p>© 2025 MindEase | For informational purposes only</p>
   </footer>
 
-   <!-- Supabase + app scripts -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <!-- Logout Button -->
+  <button id="logout-btn" onclick="supaLogout()" style="
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    background: white;
+    color: #0077b6;
+    border: 2px solid #0077b6;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+  ">Logout</button>
 
-  <script src="js/supabase-init.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/assessment.js"></script>
-  <script src="js/authetication.js"></script>
+  
+   <!-- Supabase -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-  <script>
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.addEventListener('click', function(){
-      const form = document.getElementById('quizForm');
-      let total = 0;
-      for(let i=1; i<=8; i++){
-        const value = form['q'+i].value;
-        if(value === '') {
-          alert('Please answer question '+ i);
-          return;
+<!-- Init must come first -->
+<script src="js/supabase-init.js"></script>
+
+<!-- UI helpers -->
+<script src="js/ui.js"></script>
+
+<!-- Auth functions -->
+<script src="js/authentication.js"></script>
+
+<!-- VERY IMPORTANT: Load assessment.js BEFORE inline script -->
+<script src="js/assessment.js"></script>
+
+<!-- Inline script MUST BE LAST -->
+<script>
+
+  let answers = {};
+
+for (let i = 1; i <= 8; i++) {
+    const selected = form.querySelector('input[name="q' + i + '"]:checked');
+    answers["q" + i] = parseInt(selected.value);
+}
+
+
+async function saveAssessment(score, level) {
+  try {
+    const { data: sessionData } = await window.supabase.auth.getSession();
+    const session = sessionData?.session;
+
+    if (!session) {
+      window.showNotification("Please sign in to save your assessment", "error");
+      return;
+    }
+
+    const userId = session.user.id;
+
+    const { error } = await window.supabase
+      .from("assessments")
+      .insert([
+        {
+          user_id: userId,
+          score: score,
+          level: level
         }
-        total += parseInt(value);
-      }
-      let resultText = '';
-      if(total <= 8) {
-        resultText = 'Feeling Good – your mood seems stable. Keep doing what you’re doing!';
-      } else if(total <= 16) {
-        resultText = 'Mild Mood Dip – you may benefit from a few mindful activities.';
-      } else if(total <= 24) {
-        resultText = 'Moderate Mood Concern – take some time for self-care and consider reaching out.';
-      } else {
-        resultText = 'High Mood Concern – it might be helpful to talk with someone you trust or a professional.';
-      }
-      document.getElementById('resultText').textContent = resultText;
-      document.getElementById('resultBox').classList.remove('hidden');
-      window.scrollTo(0, document.getElementById('resultBox').offsetTop);
-    });
-  </script>
+      ]);
 
-  <button id="logout-btn" onclick="logout()" style="
-  position: fixed;
-  bottom: 25px;
-  left: 25px;
-  background: white;
-  color: #0077b6;
-  border: 2px solid #0077b6;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  display: none;
-  z-index: 1000;
-">Logout</button>
+    if (error) {
+      console.error(error);
+      window.showNotification("Error saving assessment", "error");
+      return;
+    }
+
+    console.log("Assessment saved:", score, level);
+  } catch (err) {
+    console.error(err);
+    window.showNotification("Unexpected error while saving", "error");
+  }
+}
 
 
-  <!-- Supabase + app scripts -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+submitBtn.addEventListener('click', async function () {
+  const form = document.getElementById('quizForm');
+  let total = 0;
 
-  <script src="js/supabase-init.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/assessment.js"></script>
-  <script src="js/authetication.js"></script>
+  for (let i = 1; i <= 8; i++) {
+    const selected = form.querySelector('input[name="q' + i + '"]:checked');
+
+    if (!selected) {
+      window.showNotification("Please answer question " + i, "error");
+      return;
+    }
+
+    const value = selected.value;
+    total += parseInt(value);
+  }
+
+  let finalLevel = '';
+  if (total <= 8) finalLevel = 'Good';
+  else if (total <= 16) finalLevel = 'Mild';
+  else if (total <= 24) finalLevel = 'Moderate';
+  else finalLevel = 'High';
+
+  // Save to Supabase
+  await saveAssessment(total, finalLevel);
+
+  let resultText = '';
+  if (total <= 8) resultText = 'Feeling Good – stable mood.';
+  else if (total <= 16) resultText = 'Mild Mood Dip – low stress.';
+  else if (total <= 24) resultText = 'Moderate Concern – monitor yourself.';
+  else resultText = 'High Concern – consider support.';
+
+  document.getElementById('resultText').textContent = resultText;
+  document.getElementById('resultBox').classList.remove('hidden');
+  window.scrollTo(0, document.getElementById('resultBox').offsetTop);
+
+  window.showNotification("Assessment saved ✔", "success");
+});
+
+</script>
+
+
 
 </body>
 </html>

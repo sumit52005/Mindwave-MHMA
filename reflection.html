@@ -7,14 +7,11 @@
   <link rel="stylesheet" href="reflection.css" />
 </head>
 
-
-
 <body>
+
   <!-- 🌿 Navbar -->
   <nav class="navbar">
     <div class="nav-left">
-     <!--<button class="back-btn" onclick="window.history.back()">Back</button>-->
-     
       <img src="https://cdn-icons-png.flaticon.com/512/2769/2769877.png" alt="MindEase Logo" class="logo">
       <h2 class="nav-title">MindEase</h2>
     </div>
@@ -23,6 +20,7 @@
       <button class="nav-link" onclick="window.location.href='about.html'">About Us</button>
     </div>
   </nav>
+
   <a href="activities.html" class="back-btn">Back</a>
 
   <div class="container">
@@ -61,6 +59,23 @@
     </div>
   </div>
 
+  <!-- LOGOUT BUTTON -->
+  <button id="logout-btn" onclick="logout()" style="
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: white;
+      color: #0077b6;
+      border: 2px solid #0077b6;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 1000;
+  ">Logout</button>
+
   <script>
     const prompts = [
       "Describe one small win from today.",
@@ -79,18 +94,13 @@
     const result = document.getElementById("result");
     const moodSelect = document.getElementById("mood");
 
-    // Update localStorage whenever mood changes
-    moodSelect.addEventListener("change", () => {
-      localStorage.setItem("latestMood", moodSelect.value);
-    });
-
-    // Change prompt randomly
     changePromptBtn.addEventListener("click", () => {
-      promptText.textContent = "✨ Prompt: " + prompts[Math.floor(Math.random() * prompts.length)];
+      promptText.textContent =
+        "✨ Prompt: " + prompts[Math.floor(Math.random() * prompts.length)];
     });
 
-    // Save reflection
-    saveBtn.addEventListener("click", () => {
+    // SAVE reflection (Local + Supabase)
+    saveBtn.addEventListener("click", async () => {
       const text = document.getElementById("reflectionText").value.trim();
       const mood = moodSelect.value;
 
@@ -101,43 +111,37 @@
         return;
       }
 
+      // 🔥 Extract title for local save
+      const title = document.getElementById("prompt")
+        .textContent.replace("✨ Prompt: ", "")
+        .trim();
+
       const reflections = JSON.parse(localStorage.getItem("reflections")) || [];
-      const newReflection = { text, mood, date: new Date().toLocaleString() };
-      reflections.push(newReflection);
+      reflections.push({ title, text, mood, date: new Date().toLocaleString() });
       localStorage.setItem("reflections", JSON.stringify(reflections));
 
-      // Also save the latest entry for gratitude page
-      localStorage.setItem("latestMood", mood);
-      localStorage.setItem("latestReflection", text);
+      await saveReflectionToSupabase(mood, text); // Supabase save
 
       showReflections();
-
       result.textContent = "Reflection saved 🌼 You’re growing beautifully.";
       result.style.color = "#2e4053";
       result.classList.remove("hidden");
       document.getElementById("reflectionText").value = "";
     });
 
-    // Clear textarea
-    clearBtn.addEventListener("click", () => {
-      document.getElementById("reflectionText").value = "";
-      result.classList.add("hidden");
-    });
-
-    // Go to Gratitude page
-    gratitudeBtn.addEventListener("click", () => {
-      window.location.href = "gratitude.html";
-    });
-
-    // Show past reflections with delete
     function showReflections() {
       const reflections = JSON.parse(localStorage.getItem("reflections")) || [];
       reflectionList.innerHTML = reflections.length
-        ? reflections.map((r, index) => `<li><b>${r.mood}</b> - ${r.text} <span>${r.date}</span> <button class="delete-btn" data-index="${index}">🗑️</button></li>`).join("")
+        ? reflections
+            .map(
+              (r, index) =>
+                `<li><b>${r.mood}</b> — <i>${r.title}</i> — ${r.text} <span>${r.date}</span>
+                 <button class="delete-btn" data-index="${index}">🗑️</button></li>`
+            )
+            .join("")
         : "<p>No reflections yet. Start writing your first one ✍</p>";
     }
 
-    // Delete reflection
     reflectionList.addEventListener("click", (e) => {
       if (e.target.classList.contains("delete-btn")) {
         const index = e.target.dataset.index;
@@ -148,29 +152,62 @@
       }
     });
 
-    showReflections();
-    <button id="logout-btn" onclick="logout()" style="
-  position: fixed;
-  bottom: 25px;
-  left: 25px;
-  background: white;
-  color: #0077b6;
-  border: 2px solid #0077b6;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  display: none;
-  z-index: 1000;
-">Logout</button>
+    gratitudeBtn.addEventListener("click", () => {
+      window.location.href = "gratitude.html";
+    });
 
+    showReflections();
   </script>
 
+  <!-- Supabase -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/supabase-init.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/authetication.js"></script>
+  <script src="js/supabase-init.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/authentication.js"></script>
+
+  <!-- Supabase Save Function -->
+  <script>
+  async function saveReflectionToSupabase(mood, text) {
+    try {
+      const { data } = await window.supabase.auth.getSession();
+      const session = data?.session;
+
+      if (!session) {
+        window.showNotification("Please sign in first", "error");
+        return;
+      }
+
+      const userId = session.user.id;
+
+      // 🔥 Extract prompt as title
+      const title = document
+        .getElementById("prompt")
+        .textContent.replace("✨ Prompt: ", "")
+        .trim();
+
+      const { error } = await window.supabase.from("reflections").insert([
+        {
+          user_id: userId,
+          mood: mood,
+          content: text,
+          title: title   // ✅ SAVING PROMPT TITLE
+        }
+      ]);
+
+      if (error) {
+        console.error(error);
+        window.showNotification("Error saving reflection", "error");
+        return;
+      }
+
+      window.showNotification("Reflection saved 💖", "success");
+
+    } catch (err) {
+      console.error(err);
+      window.showNotification("Unexpected error", "error");
+    }
+  }
+  </script>
 
 </body>
 </html>

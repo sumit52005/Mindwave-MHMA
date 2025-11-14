@@ -7,12 +7,8 @@
   <link rel="stylesheet" href="outdoor.css"/>
 </head>
 
-
-
 <body>
- <a href="activities.html" class="back-to-hub">  &larr;Back</a>
- 
-
+  <a href="activities.html" class="back-to-hub">&larr; Back</a>
 
   <div class="overlay"></div>
 
@@ -20,12 +16,10 @@
     <h1>Outdoor & Movement 🌤️</h1>
     <p class="intro-text">Reconnect with nature, refresh your body, and calm your mind 🌿</p>
 
-    <!-- Start Button -->
     <div class="start-section">
       <button id="startBtnMain">Start My Activity 🏃‍♀️</button>
     </div>
 
-    <!-- Activity Section -->
     <div class="activity-section hidden">
       <div class="activity-card">
         <img id="activityImg" src="" alt="Activity" />
@@ -34,7 +28,6 @@
       </div>
     </div>
 
-    <!-- Timer Section -->
     <div class="timer-section hidden">
       <h2 id="timer">00:00</h2>
       <div class="timer-buttons">
@@ -44,14 +37,12 @@
       </div>
     </div>
 
-    <!-- Quotes Section -->
     <div class="quotes-section hidden">
       <div class="quote-card">
         <p id="quote">“Movement is medicine for the mind.” 💭</p>
       </div>
     </div>
 
-    <!-- Done Section -->
     <div class="done-section hidden">
       <button id="doneBtn">I'm Done ✅</button>
     </div>
@@ -93,7 +84,7 @@
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMvQl1NLA2ZP8fb8iHzNkHpqJjKdJEWuuNmg&s",
       "https://lifeloveanddirtydishes.com/wp-content/uploads//2024/05/iStock-1564441923.jpg",
       "https://citizenadvocates.net/wp-content/uploads/2021/03/cav_blog_3-2-21-850x575.jpg",
-      "https://images.pexels.com/photos/33582/sunrise-phu-quoc-island-ocean.jpg?cs=srgb&dl=pexels-pixabay-33582.jpg&fm=jpg"
+      "https://images.pexels.com/photos/33582/sunrise-phu-quoc-island-ocean.jpg"
     ];
 
     let bgIndex = 0;
@@ -102,18 +93,21 @@
       bgIndex = (bgIndex + 1) % bgImages.length;
     }, 6000);
 
-    // Timer logic
-    let timer, seconds = 0;
+    // ------------------ TIMER LOGIC ------------------
+    let timer;
+    let seconds = 0;
     const timerDisplay = document.getElementById("timer");
+
     document.getElementById("startTimer").onclick = () => {
       clearInterval(timer);
       timer = setInterval(() => {
         seconds++;
-        let mins = String(Math.floor(seconds / 60)).padStart(2, "0");
-        let secs = String(seconds % 60).padStart(2, "0");
+        const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+        const secs = String(seconds % 60).padStart(2, "0");
         timerDisplay.textContent = `${mins}:${secs}`;
       }, 1000);
     };
+
     document.getElementById("pauseTimer").onclick = () => clearInterval(timer);
     document.getElementById("resetTimer").onclick = () => {
       clearInterval(timer);
@@ -121,17 +115,21 @@
       timerDisplay.textContent = "00:00";
     };
 
+    // ------------------ START ACTIVITY ------------------
     startMainBtn.addEventListener("click", () => {
       document.querySelector(".start-section").classList.add("hidden");
       activitySection.classList.remove("hidden");
       timerSection.classList.remove("hidden");
       quotesSection.classList.remove("hidden");
       doneSection.classList.remove("hidden");
+
       showNewActivity();
       rotateQuotes();
     });
 
+    // ------------------ NEW ACTIVITY ------------------
     newActivityBtn.addEventListener("click", showNewActivity);
+
     function showNewActivity() {
       activityText.classList.add("fade-out");
       setTimeout(() => {
@@ -143,6 +141,7 @@
       }, 300);
     }
 
+    // ------------------ QUOTES ROTATION ------------------
     function rotateQuotes() {
       setInterval(() => {
         quote.classList.add("fade-out");
@@ -155,35 +154,67 @@
       }, 4000);
     }
 
-    doneBtn.addEventListener("click", () => {
-      successSound.play();
-      doneBtn.textContent = "Amazing! You did it! 🎉";
-      doneBtn.style.background = "#00c853";
-      setTimeout(() => location.reload(), 4000);
-    });
+    // ------------------ SAVE LOG TO SUPABASE ------------------
+    async function saveOutdoorLog(activity, duration, quote) {
+  try {
+    const { data } = await window.supabase.auth.getSession();
+    const session = data?.session;
 
-    <button id="logout-btn" onclick="logout()" style="
-  position: fixed;
-  bottom: 25px;
-  left: 25px;
-  background: white;
-  color: #0077b6;
-  border: 2px solid #0077b6;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  display: none;
-  z-index: 1000;
-">Logout</button>
+    if (!session) {
+      window.showNotification("Please sign in first", "error");
+      return;
+    }
+
+    const userId = session.user.id;
+
+    const { error } = await window.supabase
+      .from("outdoor_activity_logs")
+      .insert([
+        {
+          user_id: userId,
+          activity: activity,
+          duration_seconds: duration,
+          quote: quote
+        }
+      ]);
+
+    if (error) {
+      console.error("SUPABASE ERROR:", error.message);
+      window.showNotification("Error saving log", "error");
+      return;
+    }
+
+    window.showNotification("Activity saved ✔", "success");
+  } catch (err) {
+    console.error(err);
+    window.showNotification("Unexpected error", "error");
+  }
+}
+
+
+    // ------------------ DONE BUTTON ------------------
+    doneBtn.addEventListener("click", async () => {
+  successSound.play();
+
+  // final collected data
+  const finalActivity = activityText.textContent;
+  const finalDuration = seconds;
+  const finalQuote = quote.textContent;
+
+  // save to supabase
+  await saveOutdoorLog(finalActivity, finalDuration, finalQuote);
+
+  doneBtn.textContent = "Amazing! You did it! 🎉";
+  doneBtn.style.background = "#00c853";
+
+  setTimeout(() => location.reload(), 4000);
+});
 
   </script>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/supabase-init.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/authentication.js"></script>
+  <script src="js/supabase-init.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/authentication.js"></script>
 </body>
 </html>
-
