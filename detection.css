@@ -11,43 +11,32 @@ body {
   min-height: 100vh;
 }
 .navbar {
-  position: fixed;
-  top:0;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:1rem 3rem;
-  background: rgba(255,255,255,0.9);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  z-index:100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background-color: #dcedc8;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 .logo {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:1.4rem;
-  font-weight:600;
-  color:#4a4a9d;
-}
-.logo img {
-  width:40px;
-  height:40px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #439f6b;
 }
 nav a {
-  margin:0 15px;
-  text-decoration:none;
-  color:#555;
-  font-weight:500;
-  transition:color 0.3s;
+  margin-left: 2rem;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 nav a:hover, nav a.active {
-  color:#4a4a9d;
+  color: #2e8b57;
 }
 
 /* Quiz container */
 .quiz-container {
-  padding:8rem 2rem 4rem;
+  padding:4rem 2rem 4rem;
   max-width:700px;
   margin:0 auto;
   text-align:center;
@@ -137,20 +126,19 @@ button#submitBtn:hover, .btn:hover {
 /* Back Button */
 .back-btn {
   display: inline-block;
-  /* margin: 1.5rem 3rem; */
-  margin: 5.5rem 3rem 1.5rem 3rem;
+  margin: 1.5rem 3rem;
   text-decoration: none;
-  color: #6c63ff;
+  color: #2e8b57;
   font-weight: 500;
-  background: #f1f0fb;
-  padding: 0.5rem 1rem;
+  background: #dcedc8;
+  padding: 1rem 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
 }
 
 .back-btn:hover {
-  background: #e0dcfb;
+  background: #c8e6c9;
   transform: translateX(-3px);
 }
 /* Footer */

@@ -111,7 +111,6 @@
         return;
       }
 
-      // 🔥 Extract title for local save
       const title = document.getElementById("prompt")
         .textContent.replace("✨ Prompt: ", "")
         .trim();
@@ -120,7 +119,7 @@
       reflections.push({ title, text, mood, date: new Date().toLocaleString() });
       localStorage.setItem("reflections", JSON.stringify(reflections));
 
-      await saveReflectionToSupabase(mood, text); // Supabase save
+      await saveReflectionToSupabase(mood, text);
 
       showReflections();
       result.textContent = "Reflection saved 🌼 You’re growing beautifully.";
@@ -136,7 +135,7 @@
             .map(
               (r, index) =>
                 `<li><b>${r.mood}</b> — <i>${r.title}</i> — ${r.text} <span>${r.date}</span>
-                 <button class="delete-btn" data-index="${index}">🗑️</button></li>`
+                 <button class="delete-btn" data-index="${index}">🗑</button></li>`
             )
             .join("")
         : "<p>No reflections yet. Start writing your first one ✍</p>";
@@ -152,7 +151,10 @@
       }
     });
 
+    /* ⭐⭐⭐ ONLY CHANGE MADE HERE ⭐⭐⭐ */
     gratitudeBtn.addEventListener("click", () => {
+      const mood = moodSelect.value;
+      localStorage.setItem("latestMood", mood); // store mood for dynamic gratitude page
       window.location.href = "gratitude.html";
     });
 
@@ -179,7 +181,6 @@
 
       const userId = session.user.id;
 
-      // 🔥 Extract prompt as title
       const title = document
         .getElementById("prompt")
         .textContent.replace("✨ Prompt: ", "")
@@ -190,7 +191,7 @@
           user_id: userId,
           mood: mood,
           content: text,
-          title: title   // ✅ SAVING PROMPT TITLE
+          title: title
         }
       ]);
 

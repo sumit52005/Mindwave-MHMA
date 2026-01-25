@@ -4,10 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Explore | MindEase Portal</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="explore.css">
-</head>
 
+  <!-- ✅ Supabase SDK -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-init.js"></script>
+
+  <!-- ✅ Protect page: only logged-in users -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) {
+        window.location.href = "signin.html";
+      }
+    });
+  </script>
+</head>
 
 <body>
 
@@ -18,19 +32,16 @@
       <a href="index.html">Home</a>
       <a href="about.html">About us</a>
       <a href="#">Research</a>
-     
     </nav>
   </header>
-  
-
 
   <!-- Explore Page Section -->
-   
   <section class="explore-section">
     <h1>Explore Our Features</h1>
     <p class="subtext">Choose a section to begin your journey toward a peaceful mind 💫</p>
 
     <div class="cards-container">
+
       <div class="card">
         <img src="https://cdn-icons-png.flaticon.com/128/10691/10691802.png" alt="Activities Icon">
         <h2>Day-to-Day Activities</h2>
@@ -52,60 +63,49 @@
         <a href="mental.html" class="btn">Learn more</a>
       </div>
 
-      <!--<div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Psychiatrists Icon">
-        <h2>Find Psychiatrists</h2>
-        <p>Get connected with verified psychiatrists and mental health experts.</p>
-        <a href="psychiatrists" class="btn">Find now</a>
-      </div>-->
     </div>
   </section>
-
-  
 
   <footer>
     <p>© 2025 MindEase | Made with 💙 for mental wellness</p>
   </footer>
 
- <button id="logout-btn" onclick="supaLogout()">Logout</button>
+  <!-- Logout Button -->
+  <button id="logout-btn" onclick="logout()">Logout</button>
 
-<style>
-#logout-btn {
-  position: fixed; 
-  bottom: 20px; 
-  left: 20px; 
-  padding: 10px 20px;
-  background: white;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  cursor: pointer;
-  font-weight: 600;
-  display: none;
-}
-</style>
+  <style>
+    #logout-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: white;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      cursor: pointer;
+      font-weight: 600;
+      display: none;
+    }
+  </style>
 
+  <!-- ✅ Show logout button if logged in -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data?.session) {
+        document.getElementById("logout-btn").style.display = "block";
+      }
+    });
+  </script>
 
-<!-- Supabase SDK -->
-<<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/supabase-init.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/authentication.js"></script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    await ensureAuthOrRedirect();
-  });
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const { data } = await window.supabase.auth.getSession();
-  if (data?.session) {
-    document.getElementById("logout-btn").style.display = "block";
-  }
-});
-</script>
+  <!-- ✅ Logout function -->
+  <script>
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = "signin.html";
+    }
+  </script>
 
 </body>
 </html>
