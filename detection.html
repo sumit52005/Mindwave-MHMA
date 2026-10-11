@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindEase | Mood Self-Check</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <title>MindEase | Random Forest AI Mood Self-Check</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="detection.css">
 </head>
 <body>
@@ -21,94 +21,126 @@
     </nav>
   </header>
 
-  <a href="explore.html" class="back-btn">⬅ Back</a>
+  <!-- Top Action & ML Model Badge -->
+  <div class="top-action-bar">
+    <a href="explore.html" class="back-btn">⬅ Back</a>
+    <div class="ml-tag-badge">
+      <span>🌲</span> <strong>Random Forest Ensemble</strong> • 95.1% Accuracy
+    </div>
+  </div>
 
-  <section class="quiz-container">
-    <h1>Quick Mood Self-Check</h1>
-    <p>Answer the following 8 questions honestly. This is not a medical diagnosis.</p>
-
-    <form id="quizForm">
-
-      <!-- YOUR QUESTION BLOCKS (unchanged) -->
-      <div class="question" id="q1">
-        <p>1. In the past two weeks, how often have you felt little interest or pleasure in doing things?</p>
-        <label><input type="radio" name="q1" value="0"> Not at all</label>
-        <label><input type="radio" name="q1" value="1"> Several days</label>
-        <label><input type="radio" name="q1" value="2"> More than half the days</label>
-        <label><input type="radio" name="q1" value="3"> Nearly every day</label>
-      </div>
-
-      <div class="question" id="q2">
-        <p>2. In the past two weeks, how often have you felt down, depressed, or hopeless?</p>
-        <label><input type="radio" name="q2" value="0"> Not at all</label>
-        <label><input type="radio" name="q2" value="1"> Several days</label>
-        <label><input type="radio" name="q2" value="2"> More than half the days</label>
-        <label><input type="radio" name="q2" value="3"> Nearly every day</label>
-      </div>
-
-      <div class="question" id="q3">
-        <p>3. In the past two weeks, how often have you felt nervous, anxious or on edge?</p>
-        <label><input type="radio" name="q3" value="0"> Not at all</label>
-        <label><input type="radio" name="q3" value="1"> Several days</label>
-        <label><input type="radio" name="q3" value="2"> More than half the days</label>
-        <label><input type="radio" name="q3" value="3"> Nearly every day</label>
-      </div>
-
-      <div class="question" id="q4">
-        <p>4. In the past two weeks, how often have you had trouble sleeping or sleeping too much?</p>
-        <label><input type="radio" name="q4" value="0"> Not at all</label>
-        <label><input type="radio" name="q4" value="1"> Several days</label>
-        <label><input type="radio" name="q4" value="2"> More than half the days</label>
-        <label><input type="radio" name="q4" value="3"> Nearly every day</label>
-      </div>
-
-      <div class="question" id="q5">
-        <p>5. In the past two weeks, how often have you felt tired or had little energy?</p>
-        <label><input type="radio" name="q5" value="0"> Not at all</label>
-        <label><input type="radio" name="q5" value="1"> Several days</label>
-        <label><input type="radio" name="q5" value="2"> More than half the days</label>
-        <label><input type="radio" name="q5" value="3"> Nearly every day</label>
-      </div>
-
-      <div class="question" id="q6">
-        <p>6. In the past two weeks, how often have you had trouble concentrating?</p>
-        <label><input type="radio" name="q6" value="0"> Not at all</label>
-        <label><input type="radio" name="q6" value="1"> Several days</label>
-        <label><input type="radio" name="q6" value="2"> More than half the days</label>
-        <label><input type="radio" name="q6" value="3"> Nearly every day</label>
-      </div>
-
-      <div class="question" id="q7">
-        <p>7. In the past two weeks, how often have you felt restless or slowed down?</p>
-        <label><input type="radio" name="q7" value="0"> Not at all</label>
-        <label><input type="radio" name="q7" value="1"> Several days</label>
-        <label><input type="radio" name="q7" value="2"> More than half the days</label>
-        <label><input type="radio" name="q7" value="3"> Nearly every day</label>
-      </div>
-
-      <div class="question" id="q8">
-        <p>8. In the past two weeks, how often have you had harmful thoughts?</p>
-        <label><input type="radio" name="q8" value="0"> Not at all</label>
-        <label><input type="radio" name="q8" value="1"> Several days</label>
-        <label><input type="radio" name="q8" value="2"> More than half the days</label>
-        <label><input type="radio" name="q8" value="3"> Nearly every day</label>
-      </div>
-
-      <button type="button" id="submitBtn">Get Result</button>
-
-    </form>
-
-    <div id="resultBox" class="hidden">
-      <h2>Your Mood Level:</h2>
-      <p id="resultText"></p>
-      <a href="activities.html" class="btn">Try Activities</a>
-      <a href="findhelp.html" class="btn">Find Support</a>
+  <main class="quiz-container">
+    <div class="quiz-header">
+      <h1>AI-Powered Adaptive Mood Self-Check</h1>
+      <p>Interactive clinical AI that adapts each follow-up question contextually based on your previous answers (up to 10 questions). Analyzed by our 50-tree Random Forest ML ensemble with comprehensive situation analysis and relief roadmap.</p>
     </div>
 
-  </section>
+    <!-- Live Progress Bar -->
+    <div class="progress-card">
+      <div class="progress-info">
+        <span id="progressText">Question 1 of up to 10 • Initial Screening</span>
+        <span id="progressPercent">10%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressBar" style="width: 10%;"></div>
+      </div>
+    </div>
+
+    <!-- Dynamic Adaptive Quiz Container -->
+    <div id="adaptiveQuizContainer" class="adaptive-quiz-container">
+      <!-- Injected dynamically by js/assessment.js -->
+    </div>
+
+    <!-- ML Results Section -->
+    <div id="resultBox" class="hidden">
+      
+      <!-- Hero Header -->
+      <div class="result-hero">
+        <div class="result-main-info">
+          <div class="result-avatar" id="resultAvatar">✨</div>
+          <div class="result-title-group">
+            <h2 id="resultStateTitle">Mood Analysis</h2>
+            <span class="result-badge" id="resultBadge">Analyzed</span>
+          </div>
+        </div>
+        <div class="confidence-box">
+          <div class="confidence-val" id="confidenceVal">--%</div>
+          <div class="confidence-lbl">Ensemble Confidence</div>
+        </div>
+      </div>
+
+      <!-- Summary Interpretation -->
+      <div class="result-summary-text" id="resultSummaryText">
+        Evaluating responses...
+      </div>
+
+      <!-- Class Probability Distribution Spectrum -->
+      <h3 class="section-title">📊 Random Forest Probability Distribution</h3>
+      <div class="probabilities-spectrum" id="probSpectrum">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Explainable AI (XAI): Top Drivers -->
+      <h3 class="section-title">🔍 Key Contributing Factors (Feature Importance)</h3>
+      <div class="drivers-grid" id="driversGrid">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Clinical Domain Subscales -->
+      <h3 class="section-title">🩺 Clinical Domain Subscales</h3>
+      <div class="subscales-grid" id="subscalesGrid">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Tailored Recommendations & Next Steps -->
+      <div class="recommendation-box" id="recommendationBox">
+        <h3 class="section-title" id="recTitle">💡 Recommended Action Plan</h3>
+        <ul class="action-list" id="actionList">
+          <!-- Injected dynamically -->
+        </ul>
+
+        <div class="result-cta-buttons">
+          <a href="activities.html" id="primaryActivityBtn" class="btn-cta">
+            <span id="actBtnIcon">🌿</span> <span id="actBtnText">Explore Activities</span>
+          </a>
+          <button type="button" id="viewReportBtn" class="btn-cta" style="background:#0284c7;">
+            📄 View Full Report
+          </button>
+          <button type="button" id="downloadPdfBtn" class="btn-cta" style="background:#7c3aed;">
+            ⬇️ Download PDF Report
+          </button>
+          <button type="button" id="retakeBtn" class="btn-cta-secondary">
+            🔄 Retake Assessment
+          </button>
+          <a href="mental.html" class="btn-cta-secondary">
+            🩺 Find Support
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- Report Viewer Modal -->
+  <div id="reportModal" class="report-modal hidden">
+    <div class="report-modal-overlay" id="reportModalOverlay"></div>
+    <div class="report-modal-content">
+      <div class="report-modal-header">
+        <h2>📄 Full Assessment Report</h2>
+        <div style="display:flex; gap:0.8rem; align-items:center;">
+          <button type="button" id="modalDownloadPdf" class="btn-cta" style="background:#7c3aed; padding:0.6rem 1.2rem; font-size:0.88rem;">⬇️ Download PDF</button>
+          <button type="button" id="closeReportModal" class="report-modal-close">&times;</button>
+        </div>
+      </div>
+      <div class="report-modal-body" id="reportModalBody">
+        <!-- Report HTML injected here -->
+      </div>
+    </div>
+  </div>
+
+  </main>
 
   <footer>
-    <p>© 2025 MindEase | For informational purposes only</p>
+    <p>© 2025 MindEase Portal | Powered by Random Forest Machine Learning Ensemble | For informational & wellness screening purposes.</p>
   </footer>
 
   <!-- Logout Button -->
@@ -128,110 +160,32 @@
     z-index: 1000;
   ">Logout</button>
 
-  
-   <!-- Supabase -->
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <!-- Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-<!-- Init must come first -->
-<script src="js/supabase-init.js"></script>
+  <!-- jsPDF for PDF generation -->
+  <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
-<!-- UI helpers -->
-<script src="js/ui.js"></script>
+  <!-- Supabase Init -->
+  <script src="js/supabase-init.js"></script>
 
-<!-- Auth functions -->
-<script src="js/authentication.js"></script>
+  <!-- UI helpers -->
+  <script src="js/ui.js"></script>
 
-<!-- VERY IMPORTANT: Load assessment.js BEFORE inline script -->
-<script src="js/assessment.js"></script>
+  <!-- Auth functions -->
+  <script src="js/authentication.js"></script>
 
-<!-- Inline script MUST BE LAST -->
-<script>
+  <!-- Random Forest ML Engine -->
+  <script src="js/rf-engine.js"></script>
 
-  let answers = {};
+  <!-- Adaptive Clinical Quiz Engine -->
+  <script src="js/adaptive-quiz.js"></script>
 
-for (let i = 1; i <= 8; i++) {
-    const selected = form.querySelector('input[name="q' + i + '"]:checked');
-    answers["q" + i] = parseInt(selected.value);
-}
+  <!-- Report Generator -->
+  <script src="js/report-generator.js"></script>
 
-
-async function saveAssessment(score, level) {
-  try {
-    const { data: sessionData } = await window.supabase.auth.getSession();
-    const session = sessionData?.session;
-
-    if (!session) {
-      window.showNotification("Please sign in to save your assessment", "error");
-      return;
-    }
-
-    const userId = session.user.id;
-
-    const { error } = await window.supabase
-      .from("assessments")
-      .insert([
-        {
-          user_id: userId,
-          score: score,
-          level: level
-        }
-      ]);
-
-    if (error) {
-      console.error(error);
-      window.showNotification("Error saving assessment", "error");
-      return;
-    }
-
-    console.log("Assessment saved:", score, level);
-  } catch (err) {
-    console.error(err);
-    window.showNotification("Unexpected error while saving", "error");
-  }
-}
-
-
-submitBtn.addEventListener('click', async function () {
-  const form = document.getElementById('quizForm');
-  let total = 0;
-
-  for (let i = 1; i <= 8; i++) {
-    const selected = form.querySelector('input[name="q' + i + '"]:checked');
-
-    if (!selected) {
-      window.showNotification("Please answer question " + i, "error");
-      return;
-    }
-
-    const value = selected.value;
-    total += parseInt(value);
-  }
-
-  let finalLevel = '';
-  if (total <= 8) finalLevel = 'Good';
-  else if (total <= 16) finalLevel = 'Mild';
-  else if (total <= 24) finalLevel = 'Moderate';
-  else finalLevel = 'High';
-
-  // Save to Supabase
-  await saveAssessment(total, finalLevel);
-
-  let resultText = '';
-  if (total <= 8) resultText = 'Feeling Good – stable mood.';
-  else if (total <= 16) resultText = 'Mild Mood Dip – low stress.';
-  else if (total <= 24) resultText = 'Moderate Concern – monitor yourself.';
-  else resultText = 'High Concern – consider support.';
-
-  document.getElementById('resultText').textContent = resultText;
-  document.getElementById('resultBox').classList.remove('hidden');
-  window.scrollTo(0, document.getElementById('resultBox').offsetTop);
-
-  window.showNotification("Assessment saved ✔", "success");
-});
-
-</script>
-
-
+  <!-- Assessment Controller -->
+  <script src="js/assessment.js"></script>
 
 </body>
 </html>
